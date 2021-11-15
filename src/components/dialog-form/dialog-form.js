@@ -50,7 +50,8 @@ const FormDialog = (props) => {
         }
         console.log(userObj);
 
-        let api = "http://localhost:3002/user/update";
+        // let api = "http://localhost:3002/user/update";
+        let api = "https://mern-crud-app-ahmed.herokuapp.com/user/update";
 
         try {
             let response = await axios.post(api, {

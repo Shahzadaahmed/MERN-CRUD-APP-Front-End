@@ -18,6 +18,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 // Note: Importing required components...!
 import FormDialog from './dialog-form/dialog-form';
+let targetKey;
 
 // Note: Handeling Material UI styling here...!
 const useStyles = makeStyles((theme) => ({
@@ -73,7 +74,8 @@ const UsersList = () => {
     // Note: Function to fetch users from an API...!
     const fetchUsers = async () => {
 
-        let api = "http://localhost:3002/users";
+        // let api = "http://localhost:3002/users";
+        let api = "https://mern-crud-app-ahmed.herokuapp.com/users";
 
         try {
             let response = await axios.get(api);
@@ -116,7 +118,8 @@ const UsersList = () => {
     const deleteUser = async (data, key) => {
         console.log(data, key);
 
-        let api = "http://localhost:3002/user/delete";
+        // let api = "http://localhost:3002/user/delete";
+        let api = "https://mern-crud-app-ahmed.herokuapp.com/user/delete";
 
         try {
             let response = await axios.post(api, {
@@ -146,6 +149,8 @@ const UsersList = () => {
     // Note: Function to edit user...!
     const editUser = (data, key) => {
         console.log(data, key);
+        targetKey = key;
+
         setUserData(data);
         setOpenDialogForm(true)
     }
@@ -163,6 +168,11 @@ const UsersList = () => {
     // Note: Function to check user status for updating users list...!
     const userStatus = (response) => {
         console.log('Response recieved in users list screen: ', response);
+        let updateItemObj = response.data;
+
+        let usersListClone = usersList.slice(0);
+        usersListClone.splice(targetKey, 1, updateItemObj);
+        setUsersList(usersListClone);
     }
 
     // Note: Function to delete all users...!
@@ -213,14 +223,14 @@ const UsersList = () => {
                                 Users List!
                             </h1>
 
-                            <Button
+                            {/* <Button
                                 variant="contained"
                                 disableElevation
                                 style={{ marginBottom: 10, backgroundColor: "red" }}
                                 onClick={deleteAllUsers}
                             >
                                 Delete All Users
-                            </Button>
+                            </Button> */}
 
                             <Grid item xs={12} md={6} className={classes.listContainer}>
                                 <List>
