@@ -178,31 +178,34 @@ const UsersList = () => {
     // Note: Function to delete all users...!
     const deleteAllUsers = async () => {
 
-        // let api = "http://localhost:3001/user/deleteAll";
+        // let api = "http://localhost:3002/usersDeleteAll";
+        let api = "https://mern-crud-app-ahmed.herokuapp.com/usersDeleteAll";
 
-        // try {
-        //     let response = await axios({
-        //         method: "DELETE",
-        //         url: api,
-        //         headers: { 'Content-Type': 'application/json' }
-        //     });
-        //     console.log(response);
+        try {
+            let response = await axios({
+                method: "DELETE",
+                url: api,
+                headers: { 'Content-Type': 'application/json' }
+            });
+            console.log(response);
 
-        //     if (response.status === 200) {
-        //         setUsersList([...response.data]);
+            if (response.status === 200) {
+                let usersListClone = usersList.slice(0);
+                usersListClone.splice(0, usersListClone.length);
+                setUsersList(usersListClone);
 
-        //         swal({
-        //             title: "All Users Deleted",
-        //             text: "All users has been deleted successfully!",
-        //             icon: "success",
-        //             button: "Ok!",
-        //         });
-        //     }
-        // }
+                swal({
+                    title: response.data,
+                    text: "All users has been deleted successfully!",
+                    icon: "success",
+                    button: "Ok!",
+                });
+            }
+        }
 
-        // catch (error) {
-        //     console.log(error.response);
-        // }
+        catch (error) {
+            console.log(error.response);
+        }
     }
 
     return (
@@ -223,14 +226,14 @@ const UsersList = () => {
                                 Users List!
                             </h1>
 
-                            {/* <Button
+                            <Button
                                 variant="contained"
                                 disableElevation
                                 style={{ marginBottom: 10, backgroundColor: "red" }}
                                 onClick={deleteAllUsers}
                             >
                                 Delete All Users
-                            </Button> */}
+                            </Button>
 
                             <Grid item xs={12} md={6} className={classes.listContainer}>
                                 <List>
